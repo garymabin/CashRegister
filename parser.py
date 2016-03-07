@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
-#  untitled.py
+#  parser.py
 #  
 #  Copyright 2016 Bin Ma <binma@thoughtworks.com>
 #  
@@ -22,34 +22,33 @@
 #  
 #  
 
+import json
 
-Class Casher(object):
+Class IParser(object):
 	
-    def __init__(self):
-        self.printer = Printer()
-        self.parsers = {}
-        self.purchases = []
-    
-    def output(self):
-		total_price = 0
-        for purchase in self.purchases:
-			total_price += purchase.quantity() * purchase.price()
-			saved_price += total_price - purchase.value(strategies)
-			for 
-            print purchase.serialize()
-        print 'Total Price is %d, Saved Price is %d' % (total_price, saved_price)    
+	NAME_MAP = {'ITEM000001': '可口可乐',
+	            'ITEM000002': '羽毛球',
+	            'ITEM000003': '苹果' }
+	            
+	PRICE_MAP = {'ITEM000001': '3',
+	             'ITEM000002': '1',
+	             'ITEM000003': '6' }	            
+	            
+    def parse(self, content):
+        pass
 
-	def register_parser(method, parser):
-		self.parsers[method] = parser
-
-    def register_strategy(strategy):
-		self.strategies.add(strategy)
-		
-	def read_from(self, parse_method, content_string):
-		if parse_method == 'JSON':
-			self.purchases = self.parsers[parse_method].parse(content_string)
-		else:
-		   pass
-		   
-	def clear(self):
-		self.purchases = []
+Class JSONParser(IParser):
+	def __init__(self):
+		pass
+	
+	def parse(self, content):
+		rawcommodities = json.loads(content)
+		purchases = []
+		for rawcommodity in rawcommdities:
+			segments = rawcommodity.split('-')
+			purchase = None
+			if segments is not None and segments.length() == 2:
+				purchase = CommodityPurchase(Commodity(NAME_MAP.get(segments[0]), PRICE_MAP.get(segments[0]), segments[0]), segments[1])
+			if purchase is not None:
+				purchases.add(purchase)
+		return purchases
